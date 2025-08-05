@@ -1,16 +1,13 @@
 import "@/styles/globals.css";
-import type { AppProps } from "next/app";
-import ProtectedRoute from "@/hoc/ProtectedRoute";
+import type { AppProps } from "next/app"; 
 import { AuthContextProvider } from "@/context/authContext";
 import { Toaster } from "react-hot-toast";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <AuthContextProvider>
-      <ProtectedRoute>
+    <AuthContextProvider> 
         <Component {...pageProps} />
-        <Toaster position="top-right" />
-      </ProtectedRoute>
+        <Toaster position="top-right" /> 
     </AuthContextProvider>
   );
 }

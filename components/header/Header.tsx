@@ -25,10 +25,12 @@ function Header(props: any) {
 
   useEffect(() => {
     const onSearch = setTimeout(() => {
-      if (search.trim()) {
-        router.push(`?search=${encodeURIComponent(search)}`);
-      } else {
-        router.push("/");
+      if (router.pathname === "/") {
+        if (search.trim()) {
+          router.push(`?search=${encodeURIComponent(search)}`);
+        } else {
+          router.push("/");
+        }
       }
     }, 500);
 
@@ -48,35 +50,37 @@ function Header(props: any) {
             <MenuIcon />
           </button>
 
-          <a
-            href="#"
+          <Link
+            href="/"
             className="flex items-center text-2xl font-bold text-yellow-500 hover:text-yellow-400 transition-colors"
           >
             {/* Using a text-based logo for simplicity */}
             <span className="font-extrabold text-3xl">NEXT</span>
             <span className="font-light text-2xl">Shop</span>
-          </a>
+          </Link>
         </div>
 
         {/* Middle Section: Search Bar (hidden on small screens, shown on medium and larger) */}
-        <div className="hidden md:flex flex-grow max-w-xl mx-4 border border-white rounded-md">
-          <div
-            onSubmit={handleFormSubmit}
-            className="relative flex-grow flex items-center gap-3 px-3"
-          >
-            <SearchIcon />
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full   py-2 text-sm  text-white rounded-l-md border-r-0 outline-none"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+        {router.pathname === "/" && (
+          <div className="hidden md:flex flex-grow max-w-xl mx-4 border border-white rounded-md">
+            <div
+              onSubmit={handleFormSubmit}
+              className="relative flex-grow flex items-center gap-3 px-3"
+            >
+              <SearchIcon />
+              <input
+                type="text"
+                placeholder="Search..."
+                className="w-full   py-2 text-sm  text-white rounded-l-md border-r-0 outline-none"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            <button className="bg-yellow-500 text-slate-900 font-semibold px-6 py-2 rounded-r-md hover:bg-yellow-400 transition-colors">
+              Search
+            </button>
           </div>
-          <button className="bg-yellow-500 text-slate-900 font-semibold px-6 py-2 rounded-r-md hover:bg-yellow-400 transition-colors">
-            Search
-          </button>
-        </div>
+        )}
 
         {/* Right Section: Nav Links and Icons */}
         <div className="hidden md:flex items-center space-x-6">
