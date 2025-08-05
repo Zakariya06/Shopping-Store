@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+html {
+  overflow-x: hidden;
+  scroll-behavior: smoth;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -23,4 +28,119 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.product-card {
+  width: 100%;
+  position: relative;
+  box-shadow: 0 2px 7px #dfdfdf;
+  background: #fafafa;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.product-card:hover {
+  transform: translateY(-3px);
+}
+
+.badge {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 700;
+  background: red;
+  color: #fff;
+  padding: 3px 10px;
+}
+
+.product-tumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  padding: 10px;
+  background: #f0f0f0;
+}
+
+.product-tumb img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.product-details {
+  padding: 1rem 1rem;
+}
+
+.product-catagory {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.product-details h4 a {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  color: #363636;
+  font-size: 14px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.product-details h4 a:hover {
+  color: #fbb72c;
+}
+
+.product-details p {
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: #999;
+}
+
+.product-bottom-details {
+  overflow: hidden;
+  border-top: 1px solid #eee;
+  padding-top: 8px;
+}
+
+.product-bottom-details div {
+  float: left;
+  width: 50%;
+}
+
+.product-price {
+  font-size: 14px;
+  color: #fbb72c;
+  font-weight: 600;
+}
+
+.product-price small {
+  font-size: 80%;
+  font-weight: 400;
+  text-decoration: line-through;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.product-links {
+  text-align: right;
+}
+
+.product-links a {
+  display: inline-block;
+  margin-left: 5px;
+  color: #e1e1e1;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+.product-links a:hover {
+  color: #fbb72c;
 }
