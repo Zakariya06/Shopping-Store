@@ -4,7 +4,8 @@ import AppLayout from "@/layout/AppLayout";
 import { Menu } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { JSX, useEffect } from "react";
+import withAuth from "@/hoc/withAuth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +17,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function Home(props: any) {
+const Home = (props: any): JSX.Element => {
   const { products } = props;
   const { query } = useRouter();
 
@@ -114,7 +115,7 @@ export default function Home(props: any) {
       </AppLayout>
     </div>
   );
-}
+};
 
 export const getServerSideProps = async (context: any) => {
   const { query } = context;
@@ -142,3 +143,5 @@ export const getServerSideProps = async (context: any) => {
     },
   };
 };
+
+export default withAuth(Home);

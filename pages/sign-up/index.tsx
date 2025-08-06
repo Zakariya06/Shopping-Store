@@ -2,11 +2,15 @@ import Spinner from "@/components/Spinner";
 import { useAuth } from "@/context/authContext";
 import { db } from "@/firebase/firebaseConfig";
 import { PAGE_ROUTE } from "@/routes/routes";
+import {
+  signInWithGithub,
+  signInWithGoogle,
+} from "@/services/auth/authServices";
 import { addDoc, collection } from "firebase/firestore";
 import { Github } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -23,7 +27,7 @@ const SignUp = () => {
     formState: { errors, touchedFields },
   } = useForm<Inputs>();
 
-  const { signUp, loading, setLoading } = useAuth();
+  const { user, signUp, loading, setLoading } = useAuth();
 
   const router = useRouter();
 
@@ -46,6 +50,26 @@ const SignUp = () => {
     }
     setLoading(false);
   };
+
+  const signInGoogle = async () => {
+    const googleLogin = await signInWithGoogle();
+    if (googleLogin) {
+      toast.success("login success");
+    }
+  };
+
+  const signInGithub = async () => {
+    const githubLogin = await signInWithGithub();
+    if (githubLogin) {
+      toast.success("login success");
+    }
+  };
+
+  useLayoutEffect(() => {
+    if (!loading && user) {
+      router.push(PAGE_ROUTE.LOCALHOST);
+    }
+  }, [user, loading, router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
@@ -112,7 +136,10 @@ const SignUp = () => {
         </div>
 
         <div className="space-y-3">
-          <button className="w-full flex items-center justify-center border text-black border-gray-300 rounded-md py-2 hover:bg-gray-50 transition">
+          <button
+            onClick={signInGoogle}
+            className="w-full flex items-center justify-center border text-black border-gray-300 rounded-md py-2 hover:bg-gray-50 transition"
+          >
             <img
               src="https://www.svgrepo.com/show/475656/google-color.svg"
               alt="Google"
@@ -120,7 +147,10 @@ const SignUp = () => {
             />
             Continue with Google
           </button>
-          <button className="w-full flex items-center justify-center border text-black border-gray-300 rounded-md py-2 hover:bg-gray-50 transition">
+          <button
+            onClick={signInGithub}
+            className="w-full flex items-center justify-center border text-black border-gray-300 rounded-md py-2 hover:bg-gray-50 transition"
+          >
             <Github className="mr-2" />
             Continue with GitHub
           </button>

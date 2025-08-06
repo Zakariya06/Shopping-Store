@@ -1,7 +1,10 @@
 import { auth, db } from "@/firebase/firebaseConfig";
 import {
   createUserWithEmailAndPassword,
+  GithubAuthProvider,
+  GoogleAuthProvider,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
@@ -15,9 +18,17 @@ const signIn = async (email: string, password: string) => {
   }
 };
 
-const signUp = async ( email: string, password: string) => {
+const signUp = async (email: string, password: string) => {
   try {
-    return await createUserWithEmailAndPassword(auth, email, password);
+    const createdUser = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    // for to show the login page
+    await signOut(auth);
+    return createdUser;
   } catch (error: any) {
     console.error("signUp error ::", error.code);
     toast.error(error.message);
@@ -29,8 +40,14 @@ const logOut = () => {
   return signOut(auth);
 };
 
-const signInWithGoogle = () => {
-  
-}
+const signInWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  return await signInWithPopup(auth, provider);
+};
 
-export { signIn, signUp, logOut };
+const signInWithGithub = async () => {
+  const provider = new GithubAuthProvider();
+  return await signInWithPopup(auth, provider);
+};
+
+export { signIn, signUp, logOut, signInWithGoogle, signInWithGithub };
